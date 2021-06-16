@@ -5,8 +5,7 @@ require 'date'
 
 
 def sum_Of_Cubes(num)
-    num*num*num
-
+    num ** 3
 end
 
 puts(" Enter a range")
@@ -27,43 +26,15 @@ puts result
 
 #2) Given an Array, return the elements that are present exactly once in the array. You need to write a method called non_duplicated_values to accomplish this task. Example: Given [1,2,2,3,3,4,5], the method should return [1,4,5].
 
-array1 = Array.new
-
-n = gets.chomp().to_i
-
-for index in 0...n
-    temp = gets.chomp().to_i
-    array1.push(temp)
-
+arr = [1,2,2,4,5,6,6]
+res = Array.new
+for num in arr
+    if arr.count(num) == 1
+        res.push(num)
+    end
 end
 
-array1.sort()
-
-def Non_Duplicated_Values(arr)
-    array = Array.new
-    if(arr[0] != arr[1])
-        array.push(arr[0])
-    end
-    for index in 1...arr.length()-1
-        if(arr[index-1] != arr[index] and arr[index+1] != arr[index])
-            array.push(arr[index])
-        end
-    end
-
-    if(arr[arr.length-1] != arr[arr.length-2])
-        array.push(arr[arr.length-1])
-    end
-
-    return array
-end
-
-# def Non_Duplicated_Values(arr)
-#     arr.uniq
-# end
-
-array2 = Non_Duplicated_Values(array1)
-
-puts array2
+puts res
 
 
 #--------------------------------------------------------------------------------------------
@@ -75,22 +46,9 @@ puts array2
 
 puts "Enter sentence"
 
-sentence = gets.chomp().delete(' ')
+sentence = gets.chomp().delete(' ').downcase
 
-
-flag = true
-
-ending = sentence.length() - 1
-for starting in 0..sentence.length()/2
-
-    if sentence[starting] != sentence[ending]
-        flag = false
-    end
-    ending -= 1
-end
-
-puts flag
-
+puts sentence == sentence.reverse
 #---------------------------------------------------------
 
 
@@ -98,7 +56,7 @@ puts flag
 # Find if a given number is a Kaprekar number.
 
 def kaprekar(num)
-    ks = k**2
+    ks = num**2
     lenf = (ks.to_s.length)-1
     lenh = (ks.to_s.length / 2) - 1
     a = ks.to_s[0..lenh].to_i
@@ -124,19 +82,7 @@ str = "RUBY parses a file by looking for <br/> one of the special tags that tell
 
 words = str.split(" ")
 
-print words
-
-cnt = 0
-
- for word in words
-    if word == "RUBY"
-        cnt++
-    end
-end
-
-
-puts cnt.to_s
-
+puts str.count("RUBY")
 
 #---------------------------------------------------------------------------
 
@@ -167,7 +113,7 @@ def print_recursive(words , index)
     if index == words.length
         return
     end
-    puts words[index]
+     print (words[index] + " ") 
 
     print_recursive(words,index+1)
 end
@@ -193,7 +139,7 @@ puts str + str2
 #-------------------------------------------------------------------------------------------------------------------------------------
 # 10) Print current date.
 
-current_time = DateTime.now
+current_time = Time.new.to_date
 puts current_time
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -215,7 +161,7 @@ puts (d+7).to_s
 
 #13) Cut the string 1 into 4 parts & print it.
 
-puts str.split(" ",4)
+puts str.split(" ").to_a.each_slice(4).to_a
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------
@@ -246,7 +192,8 @@ end
 #------------------------------------------------------------------------------
 #17) Find the length of string 1 & 2.
 
-
+str11 = gets.chomp()
+str12 = gets.chomp()
 puts str.length
 puts str2.length
 
@@ -307,25 +254,26 @@ array = Array.new
 
 
 def fuel_Indication(fuel)
-    if fuel == 0
+    case fuel
+    when 0
         return "Out of Fuel"
-
-    elsif fuel >=1 and fuel <= 10
+    
+    when (1..10)
         return "Low Please Fill"
-
-    elsif fuel >= 11 and fuel <=30
+    
+    when (11..30)
         return "Good for Now"
-
-    elsif fuel >= 31 and fuel <50
+    
+    when (31...50)
         return "Almost Full"
-
-    elsif fuel == 50
+    
+    when 50
         return "Full"
     end
 
 end
 
-puts fuel_Indication(31)
+puts fuel_Indication(5)
 
 
 #------------------------------------------------------------------------------------------------------------------
@@ -333,13 +281,18 @@ puts fuel_Indication(31)
 #23. Swap the given values(without the third variable)
 
 
-x = 10
-y = 20
+def swap(a,b)
+    a = a+b
+    b = a-b
+    a = a-b
+    return a,b
+end
 
+x = gets.chomp().to_i
+y = gets.chomp().to_i
 puts x,y
-x = x + y
-y= x - y
-x =x - y
+
+x,y = swap(x,y)
 
 puts x,y
 
@@ -361,7 +314,16 @@ str = "RUBY parses a file by looking for <br/> one of the special tags that tell
 
 arr = {}
 for index in 0...str.length
-    if(str[index] == "a" or str[index] == "e" or str[index] == "i" or str[index] == "o" or str[index] == "u")
+    case str[index]
+    when 'a'
+        arr[str[index]] = arr[str[index]].to_i + 1
+    when 'e'
+        arr[str[index]] = arr[str[index]].to_i + 1
+    when 'i'
+        arr[str[index]] = arr[str[index]].to_i + 1
+    when 'o'
+        arr[str[index]] = arr[str[index]].to_i + 1
+    when 'u'
         arr[str[index]] = arr[str[index]].to_i + 1
     end
 end
